@@ -74,7 +74,9 @@ class _TransactionFormState extends State<TransactionForm> {
                     onPressed: _showDataPicker,
                     child: Text(
                       'Selecionar data',
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      style: TextStyle(
+                        color: Colors.amber,
+                      ),
                     ),
                   )
                 ],
@@ -88,7 +90,10 @@ class _TransactionFormState extends State<TransactionForm> {
                   RaisedButton(
                     //textColor: Colors.white,
                     color: Colors.amber,
-                    child: Text("Nova transação"),
+                    child: Text(
+                      "Nova transação",
+                      style: TextStyle(color: Colors.black),
+                    ),
                     onPressed: _submitForm,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),

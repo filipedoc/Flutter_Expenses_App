@@ -12,29 +12,30 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: MyHomePage(),
-        theme: ThemeData(
-          primarySwatch: Colors.amber,
-          accentColor: Colors.grey[700],
-          fontFamily: 'Quicksand',
-          textTheme: ThemeData.light().textTheme.copyWith(
-                headline6: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-          appBarTheme: AppBarTheme(
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  headline6: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
+      home: MyHomePage(),
+      theme: ThemeData.dark(
+          // primarySwatch: Colors.amber,
+          // accentColor: Colors.grey[700],
+          // fontFamily: 'Quicksand',
+          // textTheme: ThemeData.light().textTheme.copyWith(
+          //       headline6: TextStyle(
+          //         fontFamily: 'OpenSans',
+          //         fontSize: 18,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          // appBarTheme: AppBarTheme(
+          //   textTheme: ThemeData.light().textTheme.copyWith(
+          //         headline6: TextStyle(
+          //           fontFamily: 'OpenSans',
+          //           fontSize: 20,
+          //           fontWeight: FontWeight.bold,
+          //           color: Colors.black,
+          //         ),
+          //       ),
+          // ),
           ),
-        ));
+    );
   }
 }
 
@@ -78,14 +79,27 @@ class _MyHomePageState extends State<MyHomePage> {
         .toList();
   }
 
+  void _deleteTransation(String id) {
+    setState(() {
+      transactions.removeWhere((t) => t.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Despesas pessoais'),
+        backgroundColor: Colors.amber,
+        title: Text(
+          'Despesas pessoais',
+          style: TextStyle(color: Colors.black),
+        ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+              color: Colors.black,
+            ),
             onPressed: () => _openTransactionFormModal(context),
           )
         ],
@@ -95,12 +109,13 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransaction),
-            TransactionList(transactions),
+            TransactionList(transactions, _deleteTransation),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
+        backgroundColor: Colors.amber,
         elevation: 5,
         onPressed: () => _openTransactionFormModal(context),
       ),
