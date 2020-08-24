@@ -3,6 +3,7 @@ import 'package:expenses_app/components/transaction_form.dart';
 import 'package:flutter/material.dart';
 import './models/transaction.dart';
 import 'dart:math';
+import 'dart:io';
 
 import 'components/chart.dart';
 
@@ -87,38 +88,51 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.amber,
-        title: Text(
-          'Despesas pessoais',
-          style: TextStyle(color: Colors.black),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.add,
-              color: Colors.black,
-            ),
-            onPressed: () => _openTransactionFormModal(context),
-          )
-        ],
+    final appBar = AppBar(
+      backgroundColor: Colors.amber,
+      title: Text(
+        'Despesas pessoais',
+        style: TextStyle(color: Colors.black),
       ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
+          onPressed: () => _openTransactionFormModal(context),
+        )
+      ],
+    );
+
+    final availableHeight =
+        MediaQuery.of(context).size.height - appBar.preferredSize.height;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_recentTransaction),
-            TransactionList(transactions, _deleteTransation),
+            Container(
+              height: availableHeight * 0.25,
+              child: Chart(_recentTransaction),
+            ),
+            Container(
+              height: availableHeight * 0.75,
+              child: TransactionList(transactions, _deleteTransation),
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Colors.amber,
-        elevation: 5,
-        onPressed: () => _openTransactionFormModal(context),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              backgroundColor: Colors.amber,
+              elevation: 5,
+              onPressed: () => _openTransactionFormModal(context),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

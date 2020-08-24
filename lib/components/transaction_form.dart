@@ -44,47 +44,54 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(labelText: 'Título'),
-            ),
-            TextField(
-              controller: _valueController,
-              decoration: InputDecoration(labelText: 'Valor (R\$)'),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => _submitForm(),
-            ),
-            Container(
-              height: 50,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _selectedDate == null
-                          ? 'Nenhuma data selecionada!'
-                          : 'Data selecionada: ${DateFormat('dd/MMM/y').format(_selectedDate)}',
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: _showDataPicker,
-                    child: Text(
-                      'Selecionar data',
-                      style: TextStyle(
-                        color: Colors.amber,
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: 10 + MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 20),
+              TextField(
+                controller: _titleController,
+                decoration: InputDecoration(labelText: 'Título'),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _valueController,
+                decoration: InputDecoration(labelText: 'Valor (R\$)'),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (_) => _submitForm(),
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _selectedDate == null
+                            ? 'Nenhuma data selecionada!'
+                            : 'Data selecionada: ${DateFormat('dd/MMM/y').format(_selectedDate)}',
                       ),
                     ),
-                  )
-                ],
+                    FlatButton(
+                      onPressed: _showDataPicker,
+                      child: Text(
+                        'Selecionar data',
+                        style: TextStyle(
+                          color: Colors.amber,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            Container(
-              height: 80,
-              child: Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   RaisedButton(
@@ -101,8 +108,9 @@ class _TransactionFormState extends State<TransactionForm> {
                   )
                 ],
               ),
-            ),
-          ],
+              SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );
